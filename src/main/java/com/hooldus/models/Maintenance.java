@@ -1,18 +1,31 @@
 package com.hooldus.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Column;
-import javax.persistence.Id;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @Entity
+@Table(name = "maintenances")
 public class Maintenance {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String requester;
-    private String requesterAddress;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "client_id", referencedColumnName = "id")
+    private Person client;
+
+    @OneToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "repair_worker_id", referencedColumnName = "id")
+    private ApplicationUser repairWorker;
+
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private ZonedDateTime visitDate;
+
+    private String comment;
     private String product;
     private String problem;
     private String solution;
@@ -24,22 +37,6 @@ public class Maintenance {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public String getRequester() {
-        return requester;
-    }
-
-    public void setRequester(String requester) {
-        this.requester = requester;
-    }
-
-    public String getRequesterAddress() {
-        return requesterAddress;
-    }
-
-    public void setRequesterAddress(String requesterAddress) {
-        this.requesterAddress = requesterAddress;
     }
 
     public String getProduct() {
@@ -72,5 +69,37 @@ public class Maintenance {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Person getClient() {
+        return client;
+    }
+
+    public void setClient(Person client) {
+        this.client = client;
+    }
+
+    public ApplicationUser getRepairWorker() {
+        return repairWorker;
+    }
+
+    public void setRepairWorker(ApplicationUser repairWorker) {
+        this.repairWorker = repairWorker;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public ZonedDateTime getVisitDate() {
+        return visitDate;
+    }
+
+    public void setVisitDate(ZonedDateTime visitDate) {
+        this.visitDate = visitDate;
     }
 }

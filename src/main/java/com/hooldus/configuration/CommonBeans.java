@@ -1,5 +1,6 @@
 package com.hooldus.configuration;
 
+import org.springframework.data.web.config.PageableHandlerMethodArgumentResolverCustomizer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,5 +10,10 @@ public class CommonBeans {
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
       return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public PageableHandlerMethodArgumentResolverCustomizer customize() {
+        return p -> p.setOneIndexedParameters(true);
     }
 }

@@ -12,7 +12,7 @@ import static java.util.Collections.emptyList;
 
 @Service
 public class ApplicationUserDetailsService implements UserDetailsService {
-    private ApplicationUserRepository applicationUserRepository;
+    private final ApplicationUserRepository applicationUserRepository;
 
     public ApplicationUserDetailsService(ApplicationUserRepository applicationUserRepository) {
         this.applicationUserRepository = applicationUserRepository;
